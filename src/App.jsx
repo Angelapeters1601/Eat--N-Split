@@ -8,6 +8,7 @@ import { initialFriends } from "../public/data";
 function App() {
   const [friends, setFriends] = useState(initialFriends);
   const [selectedFriend, setSelectedFriend] = useState("");
+
   //   states for bill split
   const [bill, setBill] = useState("");
   const [yourExpense, setYourExpense] = useState("");
@@ -25,6 +26,7 @@ function App() {
       restatus: "even",
     };
     setFriends([...friends, newFriend]);
+    setIsAddFormOpen(false);
   };
 
   const handleSelectedFriend = (friend) => {
@@ -32,19 +34,19 @@ function App() {
       setSelectedFriend("");
     } else {
       setSelectedFriend(friend);
+      setBill("");
+      setYourExpense("");
+      setFriendExpense("");
+      setPayer("");
+      setSplitResult("");
+      setStatus("even");
     }
   };
 
   const handleFormSubmit = (e) => {
     e.preventDefault();
-    console.log("Form submitted, selected friend:", selectedFriend);
-    console.log("Bill:", bill);
-    console.log("Payer:", payer);
-    console.log("Your Expense:", yourExpense);
-    console.log("Friend Expense:", friendExpense);
 
-    if (!selectedFriend) return;
-    if (!bill) return;
+    if (!selectedFriend || !bill) return;
 
     let result = "";
 
@@ -96,6 +98,7 @@ function App() {
             splitResult={splitResult}
             status={status}
           />
+
           <AddForm
             addNewFriend={addNewFriend}
             defaultImgUrl="https://i.pravatar.cc/300"
